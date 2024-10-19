@@ -26,19 +26,18 @@ public class ArticleTypeController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<ArticleTypeDto> update(@RequestBody ArticleTypeDto articleTypeDto,
-                                                 @RequestParam("id") Long id) {
+                                                 @PathVariable("id") Long id) {
         return ResponseEntity.ok(articleTypeService.update(articleTypeDto, id));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@RequestParam("id") Long id) {
+    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(articleTypeService.delete(id));
     }
 
     @PostMapping("/get-all")
-    public ResponseEntity<PageImpl<ArticleTypeDto>> getAll(@RequestBody ArticleTypeDto articleTypeDto,
-            @RequestParam(name = "page", defaultValue = "1") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size) {
-        return ResponseEntity.ok(articleTypeService.getAll(articleTypeDto,page - 1, size));
+    public ResponseEntity<PageImpl<ArticleTypeDto>> getAll(@RequestParam(name = "page", defaultValue = "1") int page,
+                                                           @RequestParam(name = "size", defaultValue = "10") int size) {
+        return ResponseEntity.ok(articleTypeService.getAll(page - 1, size));
     }
 }

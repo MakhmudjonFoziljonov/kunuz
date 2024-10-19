@@ -2,11 +2,15 @@ package com.kunuz.entity;
 
 import com.kunuz.enums.Visible;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 
 @Entity
+@Getter
+@Setter
 @Table(name = "regions")
 public class RegionEntity {
     @Id
@@ -16,7 +20,7 @@ public class RegionEntity {
     @Column(name = "order_number")
     private Integer orderNumber;
     @Column(name = "visible")
-    private Visible visible;
+    private Boolean visible = Boolean.TRUE;
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 

@@ -3,19 +3,26 @@ package com.kunuz.entity;
 import com.kunuz.enums.Status;
 import com.kunuz.enums.Visible;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 
 @Entity
+@Getter
+@Setter
 @Table(name = "articles")
 public class ArticleEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @UuidGenerator
+    private String id;
     @Column(name = "title", length = 20)
     private String title;
+    @Column(name = "order_number")
+    private Integer orderNumber;
     @Column(name = "description", columnDefinition = "text")
     private String description;
     @Column(name = "content")
@@ -48,6 +55,10 @@ public class ArticleEntity {
     private Visible visible;
     @Column(name = "view_count")
     private Integer view_count;
+
+    private String nameUz;
+    private String nameRu;
+    private String nameEn;
 
 
 }

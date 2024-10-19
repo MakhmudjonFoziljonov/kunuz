@@ -1,0 +1,33 @@
+###
+POST http://localhost:8080/region/create
+Content-Type: application/json
+
+{
+  "id": 0,
+  "orderNumber": 2,
+  "nameUz": "uz2",
+  "nameRu": "ru2",
+  "nameEn": "en2"
+}
+
+###
+PUT http://localhost:8080/region/update/2
+Content-Type: application/json
+
+{
+  "orderNumber": 10,
+  "nameUz": "",
+  "nameRu": "",
+  "nameEn": ""
+}
+
+
+###
+DELETE http://localhost:8080/region/delete/2
+
+###
+GET http://localhost:8080/region/getAll
+
+###
+GET http://localhost:8080/region/getByLanguage
+Accept-Language: ru

@@ -14,5 +14,5 @@ public interface ArticleTypeRepository extends CrudRepository<ArticleTypeEntity,
     ArticleTypeEntity getById(@Param("id") Long id);
 
     @Query(value = "select * from article_types", nativeQuery = true)
-    Page<ArticleEntity> getAll(Pageable pageable);
+    Page<ArticleTypeEntity> getAll(Pageable pageable);
 }

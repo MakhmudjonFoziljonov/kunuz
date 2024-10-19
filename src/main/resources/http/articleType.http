@@ -1,0 +1,31 @@
+POST http://localhost:8080/article_type/create
+Content-Type: application/json
+
+{
+  "id": "1",
+  "orderNumber": 1,
+  "nameUz": "uz",
+  "nameRu": "ru",
+  "nameEn": "en"
+}
+
+###
+PUT http://localhost:8080/article_type/update/1
+Content-Type: application/json
+
+{
+  "id": "",
+  "orderNumber": 3,
+  "nameUz": "",
+  "nameRu": "",
+  "nameEn": ""
+}
+###
+
+DELETE http://localhost:8080/article_type/delete/1
+
+###
+###
+POST http://localhost:8080/article_type/get-all?
+    page=1&
+    size=10

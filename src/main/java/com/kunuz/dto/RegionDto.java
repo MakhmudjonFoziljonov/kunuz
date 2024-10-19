@@ -8,15 +8,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ArticleTypeDto {
-    private String id;
+public class RegionDto {
+    private Long id;
     private Integer orderNumber;
     private String nameUz;
     private String nameRu;
+
     private String nameEn;
 
-
-    public ArticleTypeDto() {
-
+    public RegionDto() {
     }
 }
