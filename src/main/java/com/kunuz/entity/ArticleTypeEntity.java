@@ -21,8 +21,8 @@ public class ArticleTypeEntity {
     private String nameUz;
     private String nameRu;
     private String nameEn;
-    @Enumerated(EnumType.STRING)
-    private Visible visible;
+    @Column(name = "visible")
+    private Boolean visible = Boolean.TRUE;
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 

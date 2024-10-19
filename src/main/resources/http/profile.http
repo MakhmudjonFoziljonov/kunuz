@@ -1,0 +1,13 @@
+POST http://localhost:8080/profile/create
+Content-Type: application/json
+
+{
+  "id": 0,
+  "name": "Makhmudjon",
+  "surname": "Foziljonov",
+  "email": "@gmail.com",
+  "phone": "999",
+  "password": "12345",
+  "status": "PUBLISHED",
+  "role": "ADMIN"
+}

@@ -1,8 +1,9 @@
 package com.kunuz.service;
 
 import com.kunuz.dto.ArticleTypeDto;
-import com.kunuz.entity.ArticleEntity;
+import com.kunuz.dto.ArticleTypeShortDto;
 import com.kunuz.entity.ArticleTypeEntity;
+import com.kunuz.enums.AppLanguage;
 import com.kunuz.enums.Visible;
 import com.kunuz.repository.ArticleTypeRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+
 
 @Service
 public class ArticleTypeService {
@@ -36,7 +38,7 @@ public class ArticleTypeService {
         articleTypeEntity.setNameRu(articleTypeDto.getNameRu());
         articleTypeEntity.setNameUz(articleTypeDto.getNameUz());
         articleTypeEntity.setCreatedDate(LocalDateTime.now());
-        articleTypeEntity.setVisible(Visible.ACTIVE);
+        articleTypeEntity.setVisible(Boolean.TRUE);
     }
 
 
@@ -51,7 +53,7 @@ public class ArticleTypeService {
 
     public String delete(Long id) {
         ArticleTypeEntity entity = articleTypeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("ArticleTypeEntity with id " + id + " not found"));
-        entity.setVisible(Visible.DELETED);
+        entity.setVisible(Boolean.FALSE);
         articleTypeRepository.save(entity);
         return "Deleted!";
     }
@@ -79,5 +81,24 @@ public class ArticleTypeService {
         }
 
         return new PageImpl<>(articleTypeDtoList, pageRequest, totalElements);
+    }
+
+    public List<ArticleTypeShortDto> getByLang(AppLanguage language) {
+        List<ArticleTypeEntity> entities = articleTypeRepository.getByLang();
+        List<ArticleTypeShortDto> shortDtoList = new LinkedList<>();
+
+        for (ArticleTypeEntity entity : entities) {
+            ArticleTypeShortDto articleTypeShortDto = new ArticleTypeShortDto();
+
+            articleTypeShortDto.setId(entity.getId());
+            articleTypeShortDto.setName(switch (language) {
+                case ru -> entity.getNameRu();
+                case en -> entity.getNameEn();
+                default -> entity.getNameUz();
+            });
+            shortDtoList.add(articleTypeShortDto);
+        }
+        return shortDtoList;
+
     }
 }

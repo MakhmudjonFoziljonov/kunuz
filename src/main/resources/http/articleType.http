@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "id": "1",
-  "orderNumber": 1,
+  "orderNumber": 4,
   "nameUz": "uz",
   "nameRu": "ru",
   "nameEn": "en"
@@ -20,6 +20,7 @@ Content-Type: application/json
   "nameRu": "",
   "nameEn": ""
 }
+
 ###
 
 DELETE http://localhost:8080/article_type/delete/1
@@ -29,3 +30,6 @@ DELETE http://localhost:8080/article_type/delete/1
 POST http://localhost:8080/article_type/get-all?
     page=1&
     size=10
+
+###
+GET http://localhost:8080/article_type/get-by-lang

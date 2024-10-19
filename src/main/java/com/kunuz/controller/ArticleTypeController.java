@@ -1,7 +1,9 @@
 package com.kunuz.controller;
 
 import com.kunuz.dto.ArticleTypeDto;
+import com.kunuz.dto.ArticleTypeShortDto;
 import com.kunuz.entity.ArticleTypeEntity;
+import com.kunuz.enums.AppLanguage;
 import com.kunuz.service.ArticleTypeService;
 import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +41,11 @@ public class ArticleTypeController {
     public ResponseEntity<PageImpl<ArticleTypeDto>> getAll(@RequestParam(name = "page", defaultValue = "1") int page,
                                                            @RequestParam(name = "size", defaultValue = "10") int size) {
         return ResponseEntity.ok(articleTypeService.getAll(page - 1, size));
+    }
+
+    @GetMapping("/get-by-lang")
+    public ResponseEntity<List<ArticleTypeShortDto>> getByLang(@RequestHeader(value = "Accept-language",
+                                                                defaultValue = "uz") AppLanguage language) {
+        return ResponseEntity.ok(articleTypeService.getByLang(language));
     }
 }
