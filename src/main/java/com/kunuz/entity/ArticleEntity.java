@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 
 @Entity
@@ -29,21 +28,18 @@ public class ArticleEntity {
     private String content;
     @Column(name = "shared_count")
     private Integer sharedCount;
-    @Column(name = "image_id")
-    private Long imageID;
+
+    @ManyToOne
+    @JoinColumn(name = "image_id")
+    private AttachEntity imageID;
+
     @ManyToOne
     @JoinColumn(name = "region_id")
     private RegionEntity regionId;
 
-/*    @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "categoty_id")
-    private Category categoryID;
-    @ManyToOne
-    @JoinColumn(name = "moderator_id")
-    private Moderator moderatorId;
-    @ManyToOne
-    @JoinColumn(name = "publisher_id")
-    private Publisher publisher_id;*/
+    private CategoryEntity categoryID;
 
     @Column(name = "status")
     private Status status;

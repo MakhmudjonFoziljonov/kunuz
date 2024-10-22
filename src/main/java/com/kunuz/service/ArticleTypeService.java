@@ -1,10 +1,9 @@
 package com.kunuz.service;
 
 import com.kunuz.dto.ArticleTypeDto;
-import com.kunuz.dto.ArticleTypeShortDto;
 import com.kunuz.entity.ArticleTypeEntity;
 import com.kunuz.enums.AppLanguage;
-import com.kunuz.enums.Visible;
+import com.kunuz.mapper.ArticleTypeInfoMapper;
 import com.kunuz.repository.ArticleTypeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +50,14 @@ public class ArticleTypeService {
     }
 
 
-    public String delete(Long id) {
-        ArticleTypeEntity entity = articleTypeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("ArticleTypeEntity with id " + id + " not found"));
-        entity.setVisible(Boolean.FALSE);
-        articleTypeRepository.save(entity);
-        return "Deleted!";
+    //    public String delete(Long id) {
+//        ArticleTypeEntity entity = articleTypeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("ArticleTypeEntity with id " + id + " not found"));
+//        articleTypeRepository.save(entity);
+//        return "Deleted!";
+//    }
+    public Boolean changeVisible(Long id) {
+        int result = articleTypeRepository.changeVisible(id);
+        return result > 0;
     }
 
     public PageImpl getAll(int page, int size) {
@@ -83,7 +85,7 @@ public class ArticleTypeService {
         return new PageImpl<>(articleTypeDtoList, pageRequest, totalElements);
     }
 
-    public List<ArticleTypeShortDto> getByLang(AppLanguage language) {
+    /*public List<ArticleTypeShortDto> getByLang(AppLanguage language) {
         List<ArticleTypeEntity> entities = articleTypeRepository.getByLang();
         List<ArticleTypeShortDto> shortDtoList = new LinkedList<>();
 
@@ -100,5 +102,8 @@ public class ArticleTypeService {
         }
         return shortDtoList;
 
+    }*/
+    public List<ArticleTypeInfoMapper> getByLang(AppLanguage lang) {
+        return articleTypeRepository.getByLang(lang.name());
     }
 }

@@ -11,3 +11,39 @@ Content-Type: application/json
   "status": "PUBLISHED",
   "role": "ADMIN"
 }
+
+### Update Profile
+PUT http://localhost:8080/profile/update/1
+Content-Type: application/json
+
+{
+  "id": 0,
+  "name": "Max",
+  "surname": "",
+  "email": "",
+  "phone": "",
+  "password": "",
+  "status": "PUBLISHED",
+  "role": "ADMIN"
+}
+
+### Get All Profiles
+GET http://localhost:8080/profile/get-all?
+    page=1&
+    size=10
+
+### Filter Profile
+POST http://localhost:8080/profile/filter
+Content-Type: application/json
+
+{
+  "id": 0,
+  "name": "",
+  "surname": "",
+  "email": "",
+  "phone": "",
+  "password": "",
+  "status": "PUBLISHED",
+  "role": "ADMIN",
+  "createdDate": ""
+}

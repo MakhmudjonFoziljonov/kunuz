@@ -5,6 +5,8 @@ import com.kunuz.enums.Status;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class ProfileDto {
@@ -16,4 +18,5 @@ public class ProfileDto {
     private String password;
     private Status status;
     private ProfileEnums role;
+    private LocalDateTime createdDate;
 }

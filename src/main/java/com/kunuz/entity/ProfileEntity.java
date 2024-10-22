@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -29,4 +31,6 @@ public class ProfileEntity {
     private Status status;
     @Enumerated(EnumType.STRING)
     private ProfileEnums role;
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
 }
