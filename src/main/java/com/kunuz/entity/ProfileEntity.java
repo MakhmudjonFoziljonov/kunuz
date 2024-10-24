@@ -2,7 +2,8 @@ package com.kunuz.entity;
 
 
 import com.kunuz.enums.ProfileEnums;
-import com.kunuz.enums.Status;
+import com.kunuz.enums.ProfileStatus;
+import com.kunuz.enums.Visible;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,10 +28,19 @@ public class ProfileEntity {
     private String phone;
     @Column(name = "password")
     private String password;
-    @Enumerated(EnumType.STRING)
-    private Status status;
-    @Enumerated(EnumType.STRING)
-    private ProfileEnums role;
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+
+    @Column(name = "visible")
+    private Boolean visible;
+
+    @Enumerated(EnumType.STRING)
+    private ProfileStatus status;
+    @Enumerated(EnumType.STRING)
+    private ProfileEnums role;
+
+    @ManyToOne
+    @JoinColumn(name = "photo_id")
+    private AttachEntity photo_id;
+
 }

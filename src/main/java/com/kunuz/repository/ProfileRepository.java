@@ -11,12 +11,20 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ProfileRepository extends CrudRepository<ProfileEntity, Long>,
         PagingAndSortingRepository<ProfileEntity, Long> {
 
     @Query(value = "select * from profiles", nativeQuery = true)
     Page<ProfileEntity> getAll(Pageable pageable);
+
+    Optional<ProfileEntity> findById(Integer id);
+
+    Optional<ProfileEntity> findByEmailAndVisibleTrue(String email);
+
+
 
    /* @Modifying
     @Transactional

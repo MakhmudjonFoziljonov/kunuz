@@ -46,7 +46,7 @@ public class ProfileService {
         profile.setPhone(profileDto.getPhone());
         profile.setPassword(profileDto.getPassword());
         profile.setRole(ProfileEnums.USER);
-        profile.setStatus(Status.NOT_PUBLISHED);
+//        profile.setStatus(Status.NOT_PUBLISHED);
     }
 
     public PageImpl<ProfileDto> getAll(int page, int size) {
@@ -64,7 +64,7 @@ public class ProfileService {
             profileDto.setPhone(entity.getPhone());
             profileDto.setPassword(entity.getPassword());
             profileDto.setRole(ProfileEnums.USER);
-            profileDto.setStatus(Status.NOT_PUBLISHED);
+//            profileDto.setStatus(Status.NOT_PUBLISHED);
             list.add(profileDto);
         }
         return new PageImpl<>(list, pageRequest, totalElements);

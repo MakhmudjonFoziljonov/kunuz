@@ -35,14 +35,14 @@ public class CustomProfileRepository {
             generalBuilder.append(" and p.phone=:phone");
             params.put("phone", profileDto.getPhone());
         }
-        if (profileDto.getCreatedDate() != null) {
+/*        if (profileDto.getCreatedDate() != null) {
             generalBuilder.append(" and p.createdDate >=:from ");
             params.put("from", profileDto.getCreatedDate());
         }
         if (profileDto.getCreatedDate() != null) {
             generalBuilder.append("and p.createdDate <=:to ");
             params.put("to", profileDto.getCreatedDate());
-        }
+        }*/
         StringBuilder selectQuery = new StringBuilder();
         selectQuery.append("select p.* from profiles as p where 1=1 ");
         selectQuery.append(generalBuilder);
