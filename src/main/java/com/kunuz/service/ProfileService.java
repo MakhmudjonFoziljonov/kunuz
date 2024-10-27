@@ -1,52 +1,64 @@
 package com.kunuz.service;
 
+import com.kunuz.controller.ProfileCreationDTO;
 import com.kunuz.dto.ArticleTypeDto;
 import com.kunuz.dto.FilterDto;
 import com.kunuz.dto.ProfileDto;
 import com.kunuz.entity.ProfileEntity;
 import com.kunuz.enums.ProfileEnums;
+import com.kunuz.enums.ProfileStatus;
 import com.kunuz.enums.Status;
+import com.kunuz.exps.AppBadRequestException;
 import com.kunuz.repository.ProfileRepository;
 import com.kunuz.repository.custom.CustomProfileRepository;
+import com.kunuz.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfileService {
-
     @Autowired
     private ProfileRepository profileRepository;
-    @Autowired
-    private CustomProfileRepository customProfileRepository;
 
-    public ProfileDto create(ProfileDto profileDto) {
-        ProfileEntity profile = new ProfileEntity();
-        toDto(profileDto, profile);
-        profileRepository.save(profile);
-        return profileDto;
+
+    public ProfileDto createProfile(ProfileCreationDTO request) {
+        Optional<ProfileEntity> optional = profileRepository.findByEmailAndVisibleTrue(request.getEmail());
+        if (optional.isPresent()) {
+            throw new AppBadRequestException("Email already in use");
+        }
+        ProfileEntity entity = new ProfileEntity();
+        entity.setName(request.getName());
+        entity.setSurname(request.getSurname());
+        entity.setEmail(request.getEmail());
+        entity.setPassword(MD5Util.md5(request.getPassword()));
+        entity.setRole(ProfileEnums.USER);
+        entity.setStatus(ProfileStatus.ACTIVE);
+        entity.setVisible(Boolean.TRUE);
+        entity.setCreatedDate(LocalDateTime.now());
+        profileRepository.save(entity);
+        return mapToDTO(entity);
     }
 
-    public ProfileDto update(ProfileDto profileDto, Long id) {
-        ProfileEntity profile = profileRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Profile not found"));
-        toDto(profileDto, profile);
-        profileRepository.save(profile);
-        return null;
-    }
+    public ProfileDto mapToDTO(ProfileEntity entity) {
+        ProfileDto dto = new ProfileDto();
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setSurname(entity.getSurname());
+        dto.setEmail(entity.getEmail());
+        dto.setPassword(entity.getPassword());
+        dto.setStatus(entity.getStatus());
+        dto.setRole(entity.getRole());
 
-    public void toDto(ProfileDto profileDto, ProfileEntity profile) {
-        profile.setName(profileDto.getName());
-        profile.setSurname(profileDto.getSurname());
-        profile.setEmail(profileDto.getEmail());
-        profile.setPhone(profileDto.getPhone());
-        profile.setPassword(profileDto.getPassword());
-        profile.setRole(ProfileEnums.USER);
-//        profile.setStatus(Status.NOT_PUBLISHED);
+        return dto;
     }
 
     public PageImpl<ProfileDto> getAll(int page, int size) {
@@ -69,11 +81,12 @@ public class ProfileService {
         }
         return new PageImpl<>(list, pageRequest, totalElements);
     }
+//
+//    public FilterDto<ProfileEntity> filter(ProfileDto profileDto) {
+//        return customProfileRepository.filter(profileDto);
+//
+//    }
 
-    public FilterDto<ProfileEntity> filter(ProfileDto profileDto) {
-        return customProfileRepository.filter(profileDto);
-
-    }
 
   /*  public String delete(Long id) {
         profileRepository.detele(id);

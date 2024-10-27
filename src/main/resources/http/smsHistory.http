@@ -1,0 +1,31 @@
+### create
+POST http://localhost:8080/sms/create
+Content-Type: application/json
+
+{
+  "id": 0,
+  "code": "1234",
+  "phone": "+998935954717",
+  "message": "TestCreate",
+  "createdDate": ""
+}
+
+
+### update
+PUT http://localhost:8080/sms/update/2
+Content-Type: application/json
+
+{
+  "id": 0,
+  "code": "Nmadur",
+  "phone": "123",
+  "message": "",
+  "createdDate": ""
+}
+
+### Get By Phone
+GET http://localhost:8080/sms/get-by-phone/+99893595471
+
+
+### Get All
+GET http://localhost:8080/sms/getAll

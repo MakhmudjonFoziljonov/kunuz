@@ -1,5 +1,6 @@
 package com.kunuz;
 
+import com.kunuz.util.RandomUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

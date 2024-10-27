@@ -7,6 +7,8 @@ import org.springframework.boot.convert.PeriodUnit;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
@@ -23,10 +25,17 @@ public class CategoryController {
                                               @PathVariable("id") Long id) {
         return ResponseEntity.ok(service.update(dto, id));
     }
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id){
-        return  ResponseEntity.ok(service.delete(id));
+    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(service.delete(id));
 
     }
+
+    @GetMapping("/get-all")
+    public ResponseEntity<List<CategoryDto>> getAll() {
+        return ResponseEntity.ok(service.getAll());
+    }
+
 
 }

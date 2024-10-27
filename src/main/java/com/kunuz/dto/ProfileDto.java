@@ -18,4 +18,5 @@ public class ProfileDto {
     private String password;
     private ProfileStatus status;
     private ProfileEnums role;
+    private String jwtToken;
 }

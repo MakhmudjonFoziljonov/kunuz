@@ -5,7 +5,7 @@ Content-Type: application/json
   "id": 0,
   "name": "Makhmudjon",
   "surname": "Foziljonov",
-  "email": "@gmail.com",
+  "email": "test@gmail.com",
   "phone": "999",
   "password": "12345",
   "status": "PUBLISHED",
@@ -46,4 +46,13 @@ Content-Type: application/json
   "status": "PUBLISHED",
   "role": "ADMIN",
   "createdDate": ""
+}
+
+### Registration
+POST localhost:8081/auth/login
+Content-Type: application/json
+
+{
+  "email": "bigmangcom@gmail.com",
+  "password": "12345"
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,5 +42,20 @@ public class CategoryService {
     public String delete(Long id) {
         categoryRepository.deleteById(id);
         return "Deleted";
+    }
+
+    public List<CategoryDto> getAll() {
+        Iterable<CategoryEntity> all = categoryRepository.findAll();
+
+        List<CategoryDto> dtoList = new LinkedList<>();
+        for (CategoryEntity entity : all) {
+            CategoryDto categoryDto = new CategoryDto();
+            categoryDto.setOrderNumber(entity.getOrderNumber());
+            categoryDto.setNameUz(entity.getNameUz());
+            categoryDto.setNameRu(entity.getNameRu());
+            categoryDto.setNameEn(entity.getNameEn());
+            dtoList.add(categoryDto);
+        }
+        return dtoList;
     }
 }

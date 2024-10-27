@@ -36,6 +36,7 @@ public class ProfileEntity {
 
     @Enumerated(EnumType.STRING)
     private ProfileStatus status;
+
     @Enumerated(EnumType.STRING)
     private ProfileEnums role;
 

@@ -1,0 +1,21 @@
+###login
+POST notify.eskiz.uz/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "mahmudjonfoziljonov1@gmail.com",
+  "password": "42FDwG9e4s4GGKb7bIL7kTqJBaQj8Xzl6ZHckL10"
+}
+
+
+### sms send
+PATCH notify.eskiz.uz/api/message/sms/send
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "mobile_phone": "+998935954717",
+  "message": "<#>kitabu.uz partali. Ro'yxatdan o'tish uchun tasdiqlash kodi: ",
+  "from": "4546"
+}
+
