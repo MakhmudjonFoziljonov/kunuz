@@ -1,7 +1,9 @@
 package com.kunuz.controller;
 
 import com.kunuz.exps.AppBadRequestException;
+import com.kunuz.exps.AppForbiddenException;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -41,5 +43,10 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(AppBadRequestException.class)
     public ResponseEntity<String> illegalArgument(AppBadRequestException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler({AppForbiddenException.class})
+    public ResponseEntity<String> illegalArgument(AppForbiddenException e) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
 }

@@ -1,4 +1,4 @@
-package com.kunuz.controller;
+package com.kunuz.dto.profile;
 
 
 import com.kunuz.enums.ProfileRole;

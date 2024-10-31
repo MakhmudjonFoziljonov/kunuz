@@ -1,11 +1,10 @@
 package com.kunuz.repository.custom;
 
 import com.kunuz.dto.FilterDto;
-import com.kunuz.dto.ProfileDto;
+import com.kunuz.dto.profile.ProfileDto;
 import com.kunuz.entity.ProfileEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

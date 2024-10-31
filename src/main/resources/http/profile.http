@@ -1,15 +1,16 @@
+###
 POST http://localhost:8080/profile/create
 Content-Type: application/json
 
+
+
 {
-  "id": 0,
-  "name": "Makhmudjon",
-  "surname": "Foziljonov",
-  "email": "test@gmail.com",
-  "phone": "999",
-  "password": "12345",
-  "status": "PUBLISHED",
-  "role": "ADMIN"
+  "name": "NodirAka",
+  "surname": "G'ulomjonov",
+  "email": "abc@gmail.com",
+  "phone": "+998935951747",
+  "password": "5954717mNm",
+  "role": "ROLE_USER"
 }
 
 ### Update Profile
@@ -49,10 +50,37 @@ Content-Type: application/json
 }
 
 ### Registration
-POST localhost:8081/auth/login
+POST localhost:8080/auth/login
 Content-Type: application/json
 
 {
   "email": "bigmangcom@gmail.com",
-  "password": "12345"
+  "password": "123456"
+}
+
+
+### Update
+PUT http://localhost:8080/profile/detail
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "name": "",
+  "surname": ""
+
+}
+
+###
+POST http://localhost:8080/profile/add-profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInVzZXJuYW1lIjoiYWJ2QGdtYWlsLmNvbSIsInN1YiI6ImFidkBnbWFpbC5jb20iLCJpYXQiOjE3MzAzMDU3NzIsImV4cCI6MTczMDM5MjE3Mn0.CSoyro3XxfyJ7YGz2i7BfvIom-gKu9E3pmtJLpFs8tI
+
+{
+"name": "Mahmud",
+"surname": "Foziljonov",
+"email": "foziljonov1@gmail.com",
+"phone": "+998931234567",
+"password": "123",
+"role": "ROLE_USER"
+
 }

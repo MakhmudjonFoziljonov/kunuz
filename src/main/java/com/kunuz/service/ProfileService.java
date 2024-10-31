@@ -1,16 +1,12 @@
 package com.kunuz.service;
 
-import com.kunuz.controller.ProfileCreationDTO;
-import com.kunuz.dto.ArticleTypeDto;
-import com.kunuz.dto.FilterDto;
-import com.kunuz.dto.ProfileDto;
+import com.kunuz.dto.profile.ProfileCreationDTO;
+import com.kunuz.dto.profile.ProfileDetailDto;
+import com.kunuz.dto.profile.ProfileDto;
 import com.kunuz.entity.ProfileEntity;
-import com.kunuz.enums.ProfileEnums;
 import com.kunuz.enums.ProfileStatus;
-import com.kunuz.enums.Status;
 import com.kunuz.exps.AppBadRequestException;
 import com.kunuz.repository.ProfileRepository;
-import com.kunuz.repository.custom.CustomProfileRepository;
 import com.kunuz.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,7 +36,7 @@ public class ProfileService {
         entity.setSurname(request.getSurname());
         entity.setEmail(request.getEmail());
         entity.setPassword(MD5Util.md5(request.getPassword()));
-        entity.setRole(ProfileEnums.USER);
+        entity.setRole(request.getRole());
         entity.setStatus(ProfileStatus.ACTIVE);
         entity.setVisible(Boolean.TRUE);
         entity.setCreatedDate(LocalDateTime.now());
@@ -75,12 +71,28 @@ public class ProfileService {
             profileDto.setEmail(entity.getEmail());
             profileDto.setPhone(entity.getPhone());
             profileDto.setPassword(entity.getPassword());
-            profileDto.setRole(ProfileEnums.USER);
+            profileDto.setRole(entity.getRole());
 //            profileDto.setStatus(Status.NOT_PUBLISHED);
             list.add(profileDto);
         }
         return new PageImpl<>(list, pageRequest, totalElements);
     }
+
+    public boolean updateDetail(@Valid ProfileDetailDto requestDTO, String username) {
+        //check with username
+        ProfileEntity profile = getByUsername(username);
+        profile.setName(requestDTO.getName());
+        profile.setSurname(requestDTO.getSurname());
+        profileRepository.save(profile);
+
+        return true;
+    }
+
+
+    public ProfileEntity getByUsername(String username) {
+        return profileRepository.findByEmailAndVisibleTrue(username).orElseThrow(() -> new AppBadRequestException("User not found"));
+    }
+
 //
 //    public FilterDto<ProfileEntity> filter(ProfileDto profileDto) {
 //        return customProfileRepository.filter(profileDto);

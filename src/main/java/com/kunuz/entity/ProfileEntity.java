@@ -1,9 +1,8 @@
 package com.kunuz.entity;
 
 
-import com.kunuz.enums.ProfileEnums;
+import com.kunuz.enums.ProfileRole;
 import com.kunuz.enums.ProfileStatus;
-import com.kunuz.enums.Visible;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,16 +17,22 @@ public class ProfileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "surname")
     private String surname;
+
     @Column(name = "email")
     private String email;
+
     @Column(name = "phone")
     private String phone;
+
     @Column(name = "password")
     private String password;
+
     @Column(name = "created_date")
     private LocalDateTime createdDate;
 
@@ -38,7 +43,7 @@ public class ProfileEntity {
     private ProfileStatus status;
 
     @Enumerated(EnumType.STRING)
-    private ProfileEnums role;
+    private ProfileRole role;
 
     @ManyToOne
     @JoinColumn(name = "photo_id")

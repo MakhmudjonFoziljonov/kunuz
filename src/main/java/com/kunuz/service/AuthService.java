@@ -1,12 +1,14 @@
 package com.kunuz.service;
 
 import com.kunuz.dto.*;
+import com.kunuz.dto.profile.ProfileDto;
 import com.kunuz.entity.ProfileEntity;
 import com.kunuz.enums.ProfileStatus;
 import com.kunuz.exps.AppBadRequestException;
 import com.kunuz.repository.ProfileRepository;
 import com.kunuz.util.JwtUtil;
 import com.kunuz.util.MD5Util;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class AuthService {
     @Autowired
     private ProfileRepository profileRepository;
@@ -103,6 +106,12 @@ public class AuthService {
         profileDTO.setEmail(entity.getEmail());
         profileDTO.setRole(entity.getRole());
         profileDTO.setJwtToken(JwtUtil.encode(entity.getEmail(), entity.getRole().toString()));
+
+
+        JwtDto jwtDto = JwtUtil.decode(profileDTO.getJwtToken());
+        if (!jwtDto.getRole().equals("ROLE_ADMIN")) {
+            throw new AppBadRequestException("403 Forbidden");
+        }
         return profileDTO;
     }
 

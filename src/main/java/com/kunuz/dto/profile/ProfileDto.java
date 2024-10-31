@@ -1,11 +1,9 @@
-package com.kunuz.dto;
+package com.kunuz.dto.profile;
 
-import com.kunuz.enums.ProfileEnums;
+import com.kunuz.enums.ProfileRole;
 import com.kunuz.enums.ProfileStatus;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,6 +15,6 @@ public class ProfileDto {
     private String phone;
     private String password;
     private ProfileStatus status;
-    private ProfileEnums role;
+    private ProfileRole role;
     private String jwtToken;
 }

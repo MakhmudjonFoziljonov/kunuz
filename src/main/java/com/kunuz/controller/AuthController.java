@@ -1,10 +1,9 @@
 package com.kunuz.controller;
 
-import com.kunuz.dto.AuthDto;
-import com.kunuz.dto.ProfileDto;
-import com.kunuz.dto.RegistrationDTO;
-import com.kunuz.dto.SmsHistoryDto;
+import com.kunuz.dto.*;
+import com.kunuz.dto.profile.ProfileDto;
 import com.kunuz.service.AuthService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +12,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("auth/")
+@Slf4j
 public class AuthController {
     @Autowired
     private AuthService authService;
@@ -31,8 +31,10 @@ public class AuthController {
     public ResponseEntity<String> smsRegistration(RegistrationDTO dto) {
         return ResponseEntity.ok(authService.smsRegistration(dto));
     }
+
     @PostMapping("/login")
-    public ResponseEntity<ProfileDto> login(@RequestBody  @Valid AuthDto dto){
+    public ResponseEntity<ProfileDto> login(@RequestBody @Valid AuthDto dto) {
+
         return ResponseEntity.ok(authService.login(dto));
     }
 

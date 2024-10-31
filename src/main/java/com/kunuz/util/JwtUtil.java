@@ -1,5 +1,6 @@
 package com.kunuz.util;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,12 +16,13 @@ import java.util.Date;
 
 
 public class JwtUtil {
-    private static final int tokenLiveTime = 86000000; // 1-day
-    private static final String secretKey = "mizdEBfSsRovxOkcqct9c6xZThBuzm54JaBR2xBb1dVkAoYcBcLKhz2A1HSTPKvv";
+    private static final int tokenLiveTime = 86400000; // 1-day
+    private static final String secretKey = "jwtproject@cCeE$SH1kDAtPr0JectDAtbacksDwposRestaurant";
 
     public static String encode(String username, String role) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", role);
+        extraClaims.put("username", username);
 
         return Jwts
                 .builder()
@@ -28,7 +30,7 @@ public class JwtUtil {
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + tokenLiveTime))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .signWith(SignatureAlgorithm.HS256, getSignInKey())
                 .compact();
     }
 
@@ -45,8 +47,21 @@ public class JwtUtil {
     }
 
     private static Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        String str = Base64.getEncoder().encodeToString(secretKey.getBytes());
+        byte[] keyBytes = Decoders.BASE64.decode(str);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+  /*  private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
+    public static String generateToken(String username, String role) {
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("role", role)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // Token expires in 1 hour
+                .signWith(SECRET_KEY)
+                .compact();
+    }*/
 
 }
