@@ -9,6 +9,7 @@ import com.kunuz.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,21 +21,21 @@ public class ProfileController {
     private ProfileService profileService;
 
     @PostMapping("/add-profile")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ProfileDto> addProfile(@RequestBody @Valid ProfileCreationDTO profileDto) {
         return ResponseEntity.ok(profileService.createProfile(profileDto));
     }
 
     @GetMapping("/get-all")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Page<ProfileDto>> getAll(@RequestParam(value = "page", defaultValue = "1") int page,
                                                    @RequestParam(value = "size", defaultValue = "10") int size) {
         return ResponseEntity.ok(profileService.getAll(page - 1, size));
     }
 
     @PutMapping("/detail")
-    public ResponseEntity<Boolean> updateDetail(@RequestBody @Valid ProfileDetailDto requestDTO,
-                                                @RequestHeader("Authorization") String token) {
-        JwtDto dto = JwtUtil.decode(token.substring(7));
-        return ResponseEntity.ok().body(profileService.updateDetail(requestDTO, dto.getUsername()));
+    public ResponseEntity<Boolean> updateDetail(@RequestBody @Valid ProfileDetailDto requestDTO) {
+        return ResponseEntity.ok().body(profileService.updateDetail(requestDTO));
     }
 
 }

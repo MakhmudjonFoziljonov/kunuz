@@ -49,4 +49,11 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> illegalArgument(AppForbiddenException e) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handle(RuntimeException e) {
+        e.printStackTrace();
+        return ResponseEntity.internalServerError().body(e.getMessage());
+    }
+
 }

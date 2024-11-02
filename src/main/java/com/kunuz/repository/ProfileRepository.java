@@ -20,6 +20,8 @@ public interface ProfileRepository extends CrudRepository<ProfileEntity, Long>, 
 
     Optional<ProfileEntity> findByEmailAndVisibleTrue(String email);
 
+    Optional<ProfileEntity> findByIdAndVisibleTrue(Long id);
+
     Optional<ProfileEntity> findByPhone(String phone);
 
 

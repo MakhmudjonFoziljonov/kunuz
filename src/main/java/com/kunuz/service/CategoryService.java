@@ -1,7 +1,9 @@
 package com.kunuz.service;
 
 import com.kunuz.dto.CategoryDto;
+import com.kunuz.dto.CategoryShortDto;
 import com.kunuz.entity.CategoryEntity;
+import com.kunuz.enums.AppLanguage;
 import com.kunuz.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,5 +59,23 @@ public class CategoryService {
             dtoList.add(categoryDto);
         }
         return dtoList;
+    }
+
+    public List<CategoryShortDto> getByLang(AppLanguage language) {
+        Iterable<CategoryEntity> entities = categoryRepository.findAll();
+
+        List<CategoryShortDto> categoryShorts = new LinkedList<>();
+        for (CategoryEntity entity : entities) {
+
+            CategoryShortDto categoryDto = new CategoryShortDto();
+            categoryDto.setId(entity.getId());
+            categoryDto.setName(switch (language) {
+                case en -> entity.getNameEn();
+                case ru -> entity.getNameRu();
+                default -> entity.getNameUz();
+            });
+            categoryShorts.add(categoryDto);
+        }
+        return categoryShorts;
     }
 }

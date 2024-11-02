@@ -16,8 +16,9 @@ import java.util.Date;
 
 
 public class JwtUtil {
-    private static final int tokenLiveTime = 86400000; // 1-day
+    private static final int ACCESS_TOKEN = 86400000; // 1-day
     private static final String secretKey = "jwtproject@cCeE$SH1kDAtPr0JectDAtbacksDwposRestaurant";
+    private static final int REFRESH_TOKEN_EXPIRATION = 604800000;
 
     public static String encode(String username, String role) {
         Map<String, Object> extraClaims = new HashMap<>();
@@ -29,7 +30,7 @@ public class JwtUtil {
                 .setClaims(extraClaims)
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + tokenLiveTime))
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN))
                 .signWith(SignatureAlgorithm.HS256, getSignInKey())
                 .compact();
     }
@@ -51,17 +52,5 @@ public class JwtUtil {
         byte[] keyBytes = Decoders.BASE64.decode(str);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
-  /*  private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-
-    public static String generateToken(String username, String role) {
-        return Jwts.builder()
-                .setSubject(username)
-                .claim("role", role)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // Token expires in 1 hour
-                .signWith(SECRET_KEY)
-                .compact();
-    }*/
 
 }

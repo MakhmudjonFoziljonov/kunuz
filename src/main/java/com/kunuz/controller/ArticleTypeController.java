@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,21 +24,25 @@ public class ArticleTypeController {
     private ArticleTypeService articleTypeService;
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<ArticleTypeDto> create(@RequestBody ArticleTypeDto articleTypeDto) {
         return ResponseEntity.ok(articleTypeService.create(articleTypeDto));
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<ArticleTypeDto> update(@RequestBody ArticleTypeDto articleTypeDto, @PathVariable("id") Long id) {
         return ResponseEntity.ok(articleTypeService.update(articleTypeDto, id));
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long id) {
         return ResponseEntity.ok(articleTypeService.changeVisible(id));
     }
 
     @PostMapping("/get-all")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Page<ArticleTypeDto>> getAll(@RequestParam(name = "page", defaultValue = "1") int page,
                                                        @RequestParam(name = "size", defaultValue = "10") int size) {
         return ResponseEntity.ok(articleTypeService.getAll(page - 1, size));

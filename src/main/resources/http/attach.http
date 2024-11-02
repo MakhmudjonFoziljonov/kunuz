@@ -1,0 +1,25 @@
+### Upload image
+POST http://localhost:8080/attach/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="test.jpg"
+
+< /Users/makhmudfoziljonov/Desktop/test.jpg
+
+### Upload video
+POST http://localhost:8080/attach/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="testvideo.mp4"
+
+< /Users/makhmudfoziljonov/Desktop/testvideo.mp4
+
+### Open photo
+GET http://localhost:8080/attach/open/test.jpg
+Content-Type: application/x-www-form-urlencoded
+
+### Open video
+GET http://localhost:8080/attach/open/testvideo.mp4
+Content-Type: application/x-www-form-urlencoded

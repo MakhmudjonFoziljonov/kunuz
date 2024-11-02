@@ -8,6 +8,7 @@ import com.kunuz.enums.ProfileStatus;
 import com.kunuz.exps.AppBadRequestException;
 import com.kunuz.repository.ProfileRepository;
 import com.kunuz.util.MD5Util;
+import com.kunuz.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -78,9 +79,9 @@ public class ProfileService {
         return new PageImpl<>(list, pageRequest, totalElements);
     }
 
-    public boolean updateDetail(@Valid ProfileDetailDto requestDTO, String username) {
+    public boolean updateDetail(ProfileDetailDto requestDTO) {
         //check with username
-        ProfileEntity profile = getByUsername(username);
+        ProfileEntity profile = getByIdUsername(SpringSecurityUtil.getCurrentUserId());
         profile.setName(requestDTO.getName());
         profile.setSurname(requestDTO.getSurname());
         profileRepository.save(profile);
@@ -91,6 +92,10 @@ public class ProfileService {
 
     public ProfileEntity getByUsername(String username) {
         return profileRepository.findByEmailAndVisibleTrue(username).orElseThrow(() -> new AppBadRequestException("User not found"));
+    }
+
+    public ProfileEntity getByIdUsername(Long id) {
+        return profileRepository.findByIdAndVisibleTrue(id).orElseThrow(() -> new AppBadRequestException("User not found"));
     }
 
 //

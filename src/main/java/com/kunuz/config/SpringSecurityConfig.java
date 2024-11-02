@@ -1,22 +1,30 @@
 package com.kunuz.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.servlet.error.DefaultErrorViewResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SpringSecurityConfig {
     @Autowired
     private UserDetailsService userDetailsService;
@@ -31,25 +39,37 @@ public class SpringSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, DefaultErrorViewResolver conventionErrorViewResolver) throws Exception {
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
                     .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/profile/add-profile/").hasRole("ADMIN")
-                    .requestMatchers("/category/**").hasRole("ADMIN")
-                    .requestMatchers("/article_type/**").hasRole("ADMIN")
-                    .requestMatchers("/article/create/").hasRole("ADMIN")
-                    .requestMatchers("/region/**").hasRole("ADMIN")
-
+                    .requestMatchers("/article_type/get-by-lang").permitAll()
+                    .requestMatchers("/attach/**").permitAll()
+                    .requestMatchers("/attach/upload/**").permitAll()
+                    .requestMatchers("/attach/open/").permitAll()
                     .anyRequest().authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-//        http.csrf(Customizer.withDefaults()); // csrf yoqilgan
-        http.csrf(AbstractHttpConfigurer::disable); // csrf yoqilgan
-        http.cors(AbstractHttpConfigurer::disable); // cors yoqilgan
+        http.csrf(AbstractHttpConfigurer::disable);
 
+        http.cors(httpSecurityCorsConfigurer -> {
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+            configuration.setAllowedMethods(Arrays.asList("*"));
+            configuration.setAllowedHeaders(Arrays.asList("*"));
+
+            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+            source.registerCorsConfiguration("/**", configuration);
+            httpSecurityCorsConfigurer.configurationSource(source);
+        });
 
         return http.build();
     }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
 
 }
