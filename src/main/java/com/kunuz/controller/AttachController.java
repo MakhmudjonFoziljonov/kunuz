@@ -1,11 +1,16 @@
 package com.kunuz.controller;
 
+import com.kunuz.dto.AttachDto;
 import com.kunuz.service.AttachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 
 @RestController
@@ -15,12 +20,19 @@ public class AttachController {
     private AttachService attachService;
 
     @PostMapping("/upload")
-    public String upload(@RequestParam("file") MultipartFile file) {
-        return attachService.saveToSystem(file);
+    public ResponseEntity<AttachDto> upload(@RequestParam("file") MultipartFile file) throws IOException {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(attachService.upload(file));
     }
+
     @GetMapping("/open/{fileName}")
     public ResponseEntity<Resource> open(@PathVariable String fileName) {
         return attachService.open(fileName);
     }
+
+    @GetMapping("/download/{fileName}")
+    public ResponseEntity<Resource> download(@PathVariable("fileName") String fileName) {
+        return attachService.download(fileName);
+    }
+
 
 }

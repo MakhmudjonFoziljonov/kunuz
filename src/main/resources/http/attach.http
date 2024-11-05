@@ -3,9 +3,9 @@ POST http://localhost:8080/attach/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary
 
 --WebAppBoundary
-Content-Disposition: form-data; name="file"; filename="test.jpg"
+Content-Disposition: form-data; name="file"; filename="jpg.jpg"
 
-< /Users/makhmudfoziljonov/Desktop/test.jpg
+< /Users/makhmudfoziljonov/Desktop/jpg.jpg
 
 ### Upload video
 POST http://localhost:8080/attach/upload
@@ -17,9 +17,13 @@ Content-Disposition: form-data; name="file"; filename="testvideo.mp4"
 < /Users/makhmudfoziljonov/Desktop/testvideo.mp4
 
 ### Open photo
-GET http://localhost:8080/attach/open/test.jpg
+GET http://localhost:8080/attach/open/7f8e76a1-d3df-497a-a463-8e47d079884c.jpg
 Content-Type: application/x-www-form-urlencoded
 
 ### Open video
 GET http://localhost:8080/attach/open/testvideo.mp4
 Content-Type: application/x-www-form-urlencoded
+
+
+### Download
+GET http://localhost:8080/attach/download/7f8e76a1-d3df-497a-a463-8e47d079884c.jpg
