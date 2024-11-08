@@ -12,4 +12,5 @@ public class ProfileDetailDto {
     private String name;
     @NotBlank
     private String surname;
+    private String photoId;
 }

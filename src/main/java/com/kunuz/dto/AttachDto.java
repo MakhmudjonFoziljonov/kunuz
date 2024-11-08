@@ -2,6 +2,7 @@ package com.kunuz.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kunuz.entity.AttachEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
@@ -18,4 +19,5 @@ public class AttachDto {
     private String extension;
     private LocalDateTime createdData;
     private String url;
+    private AttachEntity photo;
 }

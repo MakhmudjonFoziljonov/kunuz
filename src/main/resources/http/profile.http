@@ -1,16 +1,14 @@
 ###
-POST http://localhost:8080/profile/create
+POST http://localhost:8080/profile/add-profile
 Content-Type: application/json
-
-
 
 {
   "name": "NodirAka",
   "surname": "G'ulomjonov",
-  "email": "abc@gmail.com",
+  "email": "abv@gmail.com",
   "phone": "+998935951747",
-  "password": "5954717mNm",
-  "role": "ROLE_USER"
+  "password": "123",
+  "role": "ROLE_ADMIN"
 }
 
 ### Update Profile

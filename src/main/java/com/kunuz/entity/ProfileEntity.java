@@ -45,8 +45,10 @@ public class ProfileEntity {
     @Enumerated(EnumType.STRING)
     private ProfileRole role;
 
-    @ManyToOne
-    @JoinColumn(name = "photo_id")
-    private AttachEntity photo_id;
+    @Column(name = "photo_id")
+    private String photoId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "photo_id", insertable = false, updatable = false)
+    private AttachEntity photo;
 
 }

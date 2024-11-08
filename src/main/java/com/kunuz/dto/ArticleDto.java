@@ -10,10 +10,11 @@ import java.util.List;
 @Getter
 @Setter
 public class ArticleDto {
-    private Long id;
+    private String id;
     private String title;
     private String description;
     private String content;
+
     private AttachEntity imageId;
     private RegionEntity regionId;
     private CategoryEntity categoryId;

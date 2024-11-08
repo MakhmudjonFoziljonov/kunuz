@@ -8,16 +8,15 @@ import com.kunuz.enums.ProfileStatus;
 import com.kunuz.repository.ProfileRepository;
 import com.kunuz.util.JwtUtil;
 import com.kunuz.util.MD5Util;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,6 +33,9 @@ public class AuthService {
     private SmsService service;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private AttachService attachService;
+
 
     public String registration(RegistrationDTO dto) {
         Optional<ProfileEntity> optional = profileRepository.findByEmailAndVisibleTrue(dto.getEmail());
@@ -100,7 +102,10 @@ public class AuthService {
 
     public ProfileDto login(AuthDto dto) {
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword()));
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword())
+            );
+
             if (authentication.isAuthenticated()) {
                 CustomUserDetails profile = (CustomUserDetails) authentication.getPrincipal();
 
@@ -110,14 +115,15 @@ public class AuthService {
                 profileDTO.setEmail(profile.getEmail());
                 profileDTO.setRole(profile.getRole());
                 profileDTO.setJwtToken(JwtUtil.encode(profile.getEmail(), profile.getRole().toString()));
+                // profileDTO.setPhoto(attachService.getDTO(profileDTO.getPhotoId())); // Agar kerak bo'lsa photo ID ni kiriting
+
                 return profileDTO;
             }
         } catch (BadCredentialsException e) {
-            throw new UsernameNotFoundException("Phone or password wrong");
+            throw new UsernameNotFoundException("Email yoki parol noto'g'ri");
         }
-        throw new UsernameNotFoundException("Phone or password wrong");
+        throw new UsernameNotFoundException("Email yoki parol noto'g'ri");
     }
-
 
 
 }

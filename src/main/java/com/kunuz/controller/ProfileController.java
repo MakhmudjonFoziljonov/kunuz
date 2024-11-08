@@ -21,7 +21,7 @@ public class ProfileController {
     private ProfileService profileService;
 
     @PostMapping("/add-profile")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ProfileDto> addProfile(@RequestBody @Valid ProfileCreationDTO profileDto) {
         return ResponseEntity.ok(profileService.createProfile(profileDto));
     }

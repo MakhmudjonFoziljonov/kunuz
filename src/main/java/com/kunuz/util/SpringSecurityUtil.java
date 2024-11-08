@@ -5,12 +5,17 @@ import com.kunuz.entity.ProfileEntity;
 import com.kunuz.exps.AppForbiddenException;
 import com.kunuz.enums.ProfileRole;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Configuration
+@EnableWebSecurity
 public class SpringSecurityUtil {
 
     public static void checkRoleExists(String profileRole, ProfileRole... requiredRoles) {
@@ -37,20 +42,6 @@ public class SpringSecurityUtil {
         return user.getId();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() { // passwordlarni shifirlab database-da saqlash uchun
-        return new PasswordEncoder() {
-            @Override
-            public String encode(CharSequence rawPassword) {
-                return rawPassword.toString();
-            }
-
-            @Override
-            public boolean matches(CharSequence rawPassword, String encodedPassword) {
-                return MD5Util.md5(rawPassword.toString()).equals(encodedPassword);
-            }
-        };
-    }
 
 
 }

@@ -1,0 +1,14 @@
+### Create Article
+POST http://localhost:8080/article/create
+Content-Type: application/json
+
+{
+  "id": "",
+  "title": "Muhim",
+  "description": "Muhim",
+  "content": "Zo'r",
+  "imageId": {},
+  "regionId": {},
+  "categoryId": {},
+  "articleTypeList": []
+}

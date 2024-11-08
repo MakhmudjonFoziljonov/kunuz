@@ -5,6 +5,7 @@ import com.kunuz.entity.AttachEntity;
 import com.kunuz.exps.AppBadRequestException;
 import com.kunuz.repository.AttachRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
@@ -34,6 +35,8 @@ public class AttachService {
     private String folderName = "attaches";
     @Autowired
     private AttachRepository attachRepository;
+    @Value("${server.domain}")
+    private String domainName;
 
     private static final Map<String, Object> images = new HashMap<>();
 
@@ -164,7 +167,9 @@ public class AttachService {
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists() || resource.isReadable()) {
-                return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + entity.getOrigenName() + "\"").body(resource);
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + entity.getOrigenName() + "\"")
+                        .body(resource);
             } else {
                 throw new RuntimeException("Could not read the file!");
             }
@@ -195,8 +200,12 @@ public class AttachService {
         attachDTO.setSize(entity.getSize());
         attachDTO.setExtension(entity.getExtension());
         attachDTO.setCreatedData(entity.getCreatedDate());
-//        attachDTO.setUrl(openURL(entity.getId()));
+        attachDTO.setUrl(getUrl(entity.getId()));
         return attachDTO;
+    }
+
+    public String getUrl(String id) {
+        return domainName + "attach/open/" + id;
     }
 
     public AttachEntity getEntity(String id) {
@@ -211,4 +220,12 @@ public class AttachService {
         return folderName + "/" + entity.getPath() + "/" + entity.getId();
     }
 
+    public AttachDto getDTO(String id) {
+        if (id == null) return null;
+
+        AttachDto dto = new AttachDto();
+        dto.setId(id);
+        dto.setUrl(getUrl(id));
+        return dto;
+    }
 }

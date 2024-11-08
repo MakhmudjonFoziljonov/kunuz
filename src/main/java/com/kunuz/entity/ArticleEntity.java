@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -43,14 +44,22 @@ public class ArticleEntity {
 
     @Column(name = "status")
     private Status status;
+
     @Column(name = "created_date")
-    private LocalDateTime created_date;
+    private LocalDateTime createdDate;
+
     @Column(name = "published_date")
-    private LocalDateTime published_date;
+    private LocalDateTime publishedDate;
+
     @Column(name = "visible")
     private Visible visible;
+
     @Column(name = "view_count")
     private Integer view_count;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "article_type_id")
+    private ArticleTypeEntity articleTypeEntity;
 
     private String nameUz;
     private String nameRu;

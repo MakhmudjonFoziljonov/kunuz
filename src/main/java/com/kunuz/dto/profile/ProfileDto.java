@@ -1,5 +1,6 @@
 package com.kunuz.dto.profile;
 
+import com.kunuz.dto.AttachDto;
 import com.kunuz.enums.ProfileRole;
 import com.kunuz.enums.ProfileStatus;
 import lombok.Getter;
@@ -17,4 +18,5 @@ public class ProfileDto {
     private ProfileStatus status;
     private ProfileRole role;
     private String jwtToken;
+    private AttachDto photo;
 }

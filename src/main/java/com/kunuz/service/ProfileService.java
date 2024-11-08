@@ -1,5 +1,6 @@
 package com.kunuz.service;
 
+import com.kunuz.dto.AttachDto;
 import com.kunuz.dto.profile.ProfileCreationDTO;
 import com.kunuz.dto.profile.ProfileDetailDto;
 import com.kunuz.dto.profile.ProfileDto;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -25,7 +28,9 @@ import java.util.Optional;
 public class ProfileService {
     @Autowired
     private ProfileRepository profileRepository;
-
+    @Autowired
+    private AttachService attachService;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public ProfileDto createProfile(ProfileCreationDTO request) {
         Optional<ProfileEntity> optional = profileRepository.findByEmailAndVisibleTrue(request.getEmail());
@@ -36,10 +41,11 @@ public class ProfileService {
         entity.setName(request.getName());
         entity.setSurname(request.getSurname());
         entity.setEmail(request.getEmail());
-        entity.setPassword(MD5Util.md5(request.getPassword()));
+        entity.setPassword((request.getPassword()));
         entity.setRole(request.getRole());
         entity.setStatus(ProfileStatus.ACTIVE);
         entity.setVisible(Boolean.TRUE);
+        entity.setPassword(passwordEncoder.encode(request.getPassword()));
         entity.setCreatedDate(LocalDateTime.now());
         profileRepository.save(entity);
         return mapToDTO(entity);
@@ -54,6 +60,8 @@ public class ProfileService {
         dto.setPassword(entity.getPassword());
         dto.setStatus(entity.getStatus());
         dto.setRole(entity.getRole());
+
+        attachService.getDTO(entity.getPhotoId());
 
         return dto;
     }
@@ -84,6 +92,7 @@ public class ProfileService {
         ProfileEntity profile = getByIdUsername(SpringSecurityUtil.getCurrentUserId());
         profile.setName(requestDTO.getName());
         profile.setSurname(requestDTO.getSurname());
+        profile.setPhotoId(requestDTO.getPhotoId());
         profileRepository.save(profile);
 
         return true;
