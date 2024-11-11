@@ -24,7 +24,7 @@ public class ArticleTypeController {
     private ArticleTypeService articleTypeService;
 
     @PostMapping("/create")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<ArticleTypeDto> create(@RequestBody ArticleTypeDto articleTypeDto) {
         return ResponseEntity.ok(articleTypeService.create(articleTypeDto));
     }

@@ -1,18 +1,12 @@
 package com.kunuz.util;
 
 import com.kunuz.config.CustomUserDetails;
-import com.kunuz.entity.ProfileEntity;
 import com.kunuz.exps.AppForbiddenException;
 import com.kunuz.enums.ProfileRole;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -41,7 +35,6 @@ public class SpringSecurityUtil {
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
         return user.getId();
     }
-
 
 
 }

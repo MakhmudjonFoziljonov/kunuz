@@ -1,0 +1,11 @@
+### Create Category
+POST http://localhost:8080/category/create
+Content-Type: application/json
+
+{
+  "id": 0,
+  "orderNumber": 2,
+  "nameUz": "UZ",
+  "nameRu": "RU",
+  "nameEn": "EN"
+}

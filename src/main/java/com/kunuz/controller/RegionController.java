@@ -18,7 +18,7 @@ public class RegionController {
     private RegionService regionService;
 
     @PostMapping("/create")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<RegionDto> create(@RequestBody RegionDto regionDto) {
         return ResponseEntity.ok(regionService.create(regionDto));
     }

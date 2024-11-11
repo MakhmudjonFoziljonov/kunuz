@@ -4,11 +4,51 @@ Content-Type: application/json
 
 {
   "id": "",
-  "title": "Muhim",
-  "description": "Muhim",
-  "content": "Zo'r",
-  "imageId": {},
-  "regionId": {},
-  "categoryId": {},
-  "articleTypeList": []
+  "title": "TEST10",
+  "description": "TEST10",
+  "content": "TEST10",
+  "imageId": {
+    "id": "165c8fc5-c948-4669-adc3-eaff21c117cc.jpg"
+  },
+  "regionId": {
+    "id": 1
+  },
+  "categoryId": {
+    "id": 1
+  },
+  "articleTypeId": {
+    "id": 1
+  },
+  "articleTypeDtoList": [
+    {
+      "id": 1
+    }
+  ]
 }
+
+
+### Delete Article
+DELETE http://localhost:8080/article/delete/5f28ea1f-49a0-4d37-a33b-6f3298b689e5
+
+### Update Article
+PUT http://localhost:8080/article/change-status/5f28ea1f-49a0-4d37-a33b-6f3298b689e5
+Content-Type: application/x-www-form-urlencoded
+
+
+### Get last 5 elements
+GET http://localhost:8080/article/get-last-five?type=1
+
+### Get By article type and region
+GET http://localhost:8080/article/get-last-five-by-region-key?
+    typeId=1&
+    regionId=1
+
+### Last 8
+GET http://localhost:8080/article/last8?
+    excludeIds=1
+
+### Track View Count
+GET http://localhost:8080/article/view-count/bbbf36e4-2f7a-4530-97fb-991335146fa5
+
+### Track Shared Count
+GET http://localhost:8080/article/share-count/bbbf36e4-2f7a-4530-97fb-991335146fa5

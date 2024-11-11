@@ -3,9 +3,9 @@ POST http://localhost:8080/profile/add-profile
 Content-Type: application/json
 
 {
-  "name": "NodirAka",
-  "surname": "G'ulomjonov",
-  "email": "abv@gmail.com",
+  "name": "MahmudjonAKa",
+  "surname": "Foziljonov",
+  "email": "aba@gmail.com",
   "phone": "+998935951747",
   "password": "123",
   "role": "ROLE_ADMIN"

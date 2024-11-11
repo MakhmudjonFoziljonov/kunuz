@@ -37,4 +37,6 @@ public interface ArticleTypeRepository extends CrudRepository<ArticleTypeEntity,
             "        ORDER BY  order_number;", nativeQuery = true)
     List<ArticleTypeInfoMapper> getByLang(String lang);
 
+    @Query("select at from ArticleTypeEntity at where at.id = ?1")
+    ArticleTypeEntity findArticleTypeById(Long typeDtoId);
 }

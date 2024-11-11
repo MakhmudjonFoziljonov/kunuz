@@ -11,19 +11,20 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@Table(name = "article_types")
+@Table(name = "article_type")
 public class ArticleTypeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "order_number")
     private Integer orderNumber;
-    private String nameUz;
-    private String nameRu;
-    private String nameEn;
     @Column(name = "visible")
     private Boolean visible = Boolean.TRUE;
     @Column(name = "created_date")
     private LocalDateTime createdDate;
+
+    private String nameUz;
+    private String nameRu;
+    private String nameEn;
 
 }

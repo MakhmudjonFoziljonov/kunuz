@@ -2,13 +2,11 @@ package com.kunuz.service;
 
 import com.kunuz.dto.AttachDto;
 import com.kunuz.dto.PostDto;
-import com.kunuz.entity.PostAttachEntity;
 import com.kunuz.entity.PostEntity;
 import com.kunuz.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
