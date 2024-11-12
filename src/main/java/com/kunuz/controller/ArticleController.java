@@ -2,12 +2,16 @@ package com.kunuz.controller;
 
 
 import com.kunuz.dto.ArticleDto;
+import com.kunuz.dto.ArticleFilterDto;
 import com.kunuz.dto.ArticleShortInfoDto;
 import com.kunuz.service.ArticleService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +23,7 @@ public class ArticleController {
     private ArticleService articleService;
 
     @PostMapping("/create")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<ArticleDto> create(@RequestBody ArticleDto articleDto, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(articleService.create(articleDto, request));
     }
@@ -29,6 +34,7 @@ public class ArticleController {
     }*/
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('MODERATOR')")
     public String delete(@PathVariable("id") String id) {
         return articleService.delete(id);
     }
@@ -54,8 +60,7 @@ public class ArticleController {
     }
 
     @GetMapping("/get-last-five-by-region-key")
-    public ResponseEntity<List<ArticleDto>> getLastFiveRegionKey(@RequestParam(name = "typeId") Long typeId,
-                                                                 @RequestParam(name = "regionId") Long regionId) {
+    public ResponseEntity<List<ArticleDto>> getLastFiveRegionKey(@RequestParam(name = "typeId") Long typeId, @RequestParam(name = "regionId") Long regionId) {
         return ResponseEntity.status(HttpStatus.OK).body(articleService.getLastFiveRegionKey(typeId, regionId));
     }
 
@@ -74,6 +79,18 @@ public class ArticleController {
     @GetMapping("/share-count/{articleId}")
     public String trackShareCount(@PathVariable String articleId) {
         return articleService.trackShareCount(articleId);
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<PageImpl<ArticleShortInfoDto>> filter(@RequestBody ArticleFilterDto articleFilterDto, @RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
+        return ResponseEntity.ok(articleService.filter(articleFilterDto, page - 1, size));
+    }
+
+    @GetMapping("/get-article-by-category")
+    public ResponseEntity<Page<ArticleShortInfoDto>> getByCategory(@RequestParam Long categoryId,
+                                                                   @RequestParam(value = "page", defaultValue = "1") int page,
+                                                                   @RequestParam(value = "size", defaultValue = "10") int size) {
+        return ResponseEntity.status(HttpStatus.OK).body(articleService.getByCategory(categoryId, page - 1, size));
     }
 
 

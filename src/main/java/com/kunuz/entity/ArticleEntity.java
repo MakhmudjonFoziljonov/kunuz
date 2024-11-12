@@ -50,7 +50,7 @@ public class ArticleEntity {
     private RegionEntity region;
 
     @ManyToOne
-    @JoinColumn(name = "categoty_id")
+    @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
     @Enumerated(EnumType.STRING)

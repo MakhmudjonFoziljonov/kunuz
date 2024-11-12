@@ -1,12 +1,13 @@
 ### Create Article
 POST http://localhost:8080/article/create
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInVzZXJuYW1lIjoiYWJhQGdtYWlsLmNvbSIsInN1YiI6ImFiYUBnbWFpbC5jb20iLCJpYXQiOjE3MzEzNDUwNDYsImV4cCI6MTczMTQzMTQ0Nn0.XiVuV3V-UdpRPiHVl2rYXkGPz8mCtcqy8wL6TmAe6cw
 
 {
   "id": "",
-  "title": "TEST10",
-  "description": "TEST10",
-  "content": "TEST10",
+  "title": "TEST11",
+  "description": "TEST11",
+  "content": "TEST11",
   "imageId": {
     "id": "165c8fc5-c948-4669-adc3-eaff21c117cc.jpg"
   },
@@ -14,7 +15,7 @@ Content-Type: application/json
     "id": 1
   },
   "categoryId": {
-    "id": 1
+    "id": 2
   },
   "articleTypeId": {
     "id": 1
@@ -29,6 +30,7 @@ Content-Type: application/json
 
 ### Delete Article
 DELETE http://localhost:8080/article/delete/5f28ea1f-49a0-4d37-a33b-6f3298b689e5
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInVzZXJuYW1lIjoiYWJhQGdtYWlsLmNvbSIsInN1YiI6ImFiYUBnbWFpbC5jb20iLCJpYXQiOjE3MzEzNDAwMDMsImV4cCI6MTczMTQyNjQwM30.dKqxqUsC0XLnOoU0PCt-7COHy3Bb-nSAnFu-VMYWLx0
 
 ### Update Article
 PUT http://localhost:8080/article/change-status/5f28ea1f-49a0-4d37-a33b-6f3298b689e5
@@ -52,3 +54,10 @@ GET http://localhost:8080/article/view-count/bbbf36e4-2f7a-4530-97fb-991335146fa
 
 ### Track Shared Count
 GET http://localhost:8080/article/share-count/bbbf36e4-2f7a-4530-97fb-991335146fa5
+
+
+### Get by category ID
+GET http://localhost:8080/article/get-article-by-category?
+    categoryId=2&
+    page=1&
+    size=10

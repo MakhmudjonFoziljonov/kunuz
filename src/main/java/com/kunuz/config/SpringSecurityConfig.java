@@ -52,7 +52,7 @@ public class SpringSecurityConfig {
                     .requestMatchers("/attach/upload/**").permitAll()
                     .requestMatchers("/attach/open/").permitAll()
                     .requestMatchers("/article-types/**").permitAll()
-                    .requestMatchers("/article/**").permitAll()
+                    .requestMatchers("/article/*").permitAll()
                     .requestMatchers("/region/**").permitAll()
                     .requestMatchers("/category/**").permitAll()
                     .anyRequest().authenticated();

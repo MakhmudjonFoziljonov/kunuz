@@ -2,19 +2,23 @@ package com.kunuz.service;
 
 
 import com.kunuz.dto.ArticleDto;
+import com.kunuz.dto.ArticleFilterDto;
 import com.kunuz.dto.ArticleShortInfoDto;
 import com.kunuz.entity.ArticleEntity;
 import com.kunuz.enums.Status;
 import com.kunuz.enums.Visible;
 import com.kunuz.mapper.ArticleShortInfo;
 import com.kunuz.repository.ArticleRepository;
+import com.kunuz.repository.custom.CustomArticleFilter;
+import com.kunuz.util.SpringSecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,6 +29,7 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final ArticleTypesService articleTypesService;
     private final AttachService attachService;
+    private final CustomArticleFilter filter;
 
     public ArticleDto create(ArticleDto articleDto, HttpServletRequest request) {
 
@@ -48,7 +53,7 @@ public class ArticleService {
         entity.setViewCount(0);
 
 
-//        entity.setModeratorId(SpringSecurityUtil.getCurrentUserId());
+        entity.setModeratorId(SpringSecurityUtil.getCurrentUserId());
 
         articleRepository.save(entity);
 
@@ -160,4 +165,41 @@ public class ArticleService {
         return dtoList;
     }
 
+    public PageImpl<ArticleShortInfoDto> filter(ArticleFilterDto articleFilterDto, int page, int size) {
+
+        LocalDateTime fromDate = LocalDateTime.of(articleFilterDto.getCreatedDateFrom(), LocalTime.MIN);
+        LocalDateTime toDate = LocalDateTime.of(articleFilterDto.getCreatedDateTo(), LocalTime.MAX);
+        PageImpl<ArticleEntity> resultFilter = filter.filter(articleFilterDto, page, size, toDate, fromDate);
+
+        List<ArticleShortInfoDto> shortInfos = new LinkedList<>();
+        for (ArticleEntity article : resultFilter) {
+            shortInfos.add(toShortDTO(article));
+        }
+        return new PageImpl<>(shortInfos, resultFilter.getPageable(), resultFilter.getTotalElements());
+    }
+
+
+    public ArticleShortInfoDto toShortDTO(ArticleEntity entity) {
+
+        ArticleShortInfoDto dto = new ArticleShortInfoDto();
+        dto.setId(entity.getId());
+        dto.setDescription(entity.getDescription());
+        dto.setTitle(entity.getTitle());
+        dto.setPublishedDate(entity.getPublishedDate());
+
+        return dto;
+    }
+
+    public PageImpl<ArticleShortInfoDto> getByCategory(Long categoryId, int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        List<ArticleEntity> entities = articleRepository.findByCategoryId(categoryId, pageRequest);
+
+        long total = articleRepository.countByCategoryId(categoryId);
+        List<ArticleShortInfoDto> dtoList = new LinkedList<>();
+
+        for (ArticleEntity entity : entities) {
+            dtoList.add(toShortDTO(entity));
+        }
+        return new PageImpl<>(dtoList, pageRequest, total);
+    }
 }

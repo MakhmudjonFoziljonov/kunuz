@@ -107,17 +107,6 @@ public class ProfileService {
         return profileRepository.findByIdAndVisibleTrue(id).orElseThrow(() -> new AppBadRequestException("User not found"));
     }
 
-//
-//    public FilterDto<ProfileEntity> filter(ProfileDto profileDto) {
-//        return customProfileRepository.filter(profileDto);
-//
-//    }
-
-
-  /*  public String delete(Long id) {
-        profileRepository.detele(id);
-        return "Deleted";
-    }*/
 
 }
 

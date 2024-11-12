@@ -1,6 +1,7 @@
 package com.kunuz.repository;
 
 import com.kunuz.dto.ArticleDto;
+import com.kunuz.dto.ArticleFilterDto;
 import com.kunuz.entity.ArticleEntity;
 import com.kunuz.enums.Status;
 import com.kunuz.mapper.ArticleShortInfo;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ArticleRepository extends CrudRepository<ArticleEntity, String> {
+public interface ArticleRepository extends CrudRepository<ArticleEntity, String>,
+        PagingAndSortingRepository<ArticleEntity, String> {
     Iterable<ArticleEntity> findAll();
 
     @Modifying
@@ -55,4 +58,11 @@ public interface ArticleRepository extends CrudRepository<ArticleEntity, String>
 
     @Query(value = "select * from articles where id = ?1", nativeQuery = true)
     Optional<ArticleEntity> findByArticleId(String articleId);
+
+    @Query(value = "select ar.* from articles ar where ar.category_id= ?1 ORDER BY ar.id", nativeQuery = true)
+    List<ArticleEntity> findByCategoryId(Long categoryId, Pageable pageable);
+
+
+    @Query("SELECT COUNT(ar) FROM ArticleEntity ar WHERE ar.category.id = ?1")
+    long countByCategoryId(Long categoryId);
 }

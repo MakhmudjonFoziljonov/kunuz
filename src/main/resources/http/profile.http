@@ -3,12 +3,12 @@ POST http://localhost:8080/profile/add-profile
 Content-Type: application/json
 
 {
-  "name": "MahmudjonAKa",
+  "name": "MahmudjonModer",
   "surname": "Foziljonov",
-  "email": "aba@gmail.com",
+  "email": "abb@gmail.com",
   "phone": "+998935951747",
   "password": "123",
-  "role": "ROLE_ADMIN"
+  "role": "MODERATOR"
 }
 
 ### Update Profile
