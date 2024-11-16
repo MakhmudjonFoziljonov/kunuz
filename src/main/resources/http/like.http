@@ -1,0 +1,19 @@
+### Like
+POST http://localhost:8080/like/like?
+    articleId=fea43b7d-e6e2-42d1-a5a3-a7e2950d0b2f
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInVzZXJuYW1lIjoiYWJhQGdtYWlsLmNvbSIsInN1YiI6ImFiYUBnbWFpbC5jb20iLCJpYXQiOjE3MzE0NzMwNjUsImV4cCI6MTczMTU1OTQ2NX0.jF3XQJFAFjH20Qocjg3ziACHR6EyOuSxulI-xV-AlnA
+
+
+### Dislike
+POST http://localhost:8080/like/dislike?
+    articleId=fea43b7d-e6e2-42d1-a5a3-a7e2950d0b2f
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInVzZXJuYW1lIjoiYWJhQGdtYWlsLmNvbSIsInN1YiI6ImFiYUBnbWFpbC5jb20iLCJpYXQiOjE3MzE0NzMwNjUsImV4cCI6MTczMTU1OTQ2NX0.jF3XQJFAFjH20Qocjg3ziACHR6EyOuSxulI-xV-AlnA
+
+
+### Remove like or dislike
+POST http://localhost:8080/like/remove?
+    articleId=fea43b7d-e6e2-42d1-a5a3-a7e2950d0b2f
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInVzZXJuYW1lIjoiYWJhQGdtYWlsLmNvbSIsInN1YiI6ImFiYUBnbWFpbC5jb20iLCJpYXQiOjE3MzE0NzMwNjUsImV4cCI6MTczMTU1OTQ2NX0.jF3XQJFAFjH20Qocjg3ziACHR6EyOuSxulI-xV-AlnA

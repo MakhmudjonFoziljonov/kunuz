@@ -1,0 +1,9 @@
+### Create Comment
+POST http://localhost:8080/comment/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInVzZXJuYW1lIjoiYWJhQGdtYWlsLmNvbSIsInN1YiI6ImFiYUBnbWFpbC5jb20iLCJpYXQiOjE3MzE1OTQ4NjIsImV4cCI6MTczMTY4MTI2Mn0.qLwkAzZMNMLiBXCy6vmIJTGkLY-XI0jHKqMXHcbUtnw
+
+{
+  "content": "TEST",
+  "articleId": "022dc52f-7179-4ad9-b8d3-d91dc107b188"
+}

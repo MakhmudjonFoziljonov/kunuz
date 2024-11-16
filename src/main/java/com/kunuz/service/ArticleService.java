@@ -4,12 +4,14 @@ package com.kunuz.service;
 import com.kunuz.dto.ArticleDto;
 import com.kunuz.dto.ArticleFilterDto;
 import com.kunuz.dto.ArticleShortInfoDto;
+import com.kunuz.dto.ArticleShortInfoRecord;
 import com.kunuz.entity.ArticleEntity;
 import com.kunuz.enums.Status;
 import com.kunuz.enums.Visible;
 import com.kunuz.mapper.ArticleShortInfo;
 import com.kunuz.repository.ArticleRepository;
 import com.kunuz.repository.custom.CustomArticleFilter;
+import com.kunuz.util.HeaderUtil;
 import com.kunuz.util.SpringSecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -34,7 +36,7 @@ public class ArticleService {
     public ArticleDto create(ArticleDto articleDto, HttpServletRequest request) {
 
         ArticleEntity entity = new ArticleEntity();
-        articleDto.setIpAddress(getClientIp(request));
+        articleDto.setIpAddress(HeaderUtil.getUserIP(request));
 
         entity.setTitle(articleDto.getTitle());
         entity.setOrderNumber(entity.getOrderNumber());
@@ -116,7 +118,7 @@ public class ArticleService {
     }
 
     public String trackView(String articleId, HttpServletRequest request) {
-        String ipAddress = getClientIp(request);
+        String ipAddress = HeaderUtil.getUserIP(request);
         ArticleEntity article = articleRepository.finByArticleIdAndIpAddress(articleId, ipAddress)
                 .orElseThrow(() -> new RuntimeException("No article found with the given articleId and ipAddress"));
 
@@ -128,19 +130,12 @@ public class ArticleService {
         return "View Count Updated";
     }
 
-    public String getClientIp(HttpServletRequest request) {
-        String ipAddress = request.getHeader("X-Forwarded-For");
-        if (ipAddress == null || ipAddress.isEmpty() || "unknown".equalsIgnoreCase(ipAddress)) {
-            ipAddress = request.getRemoteAddr();
-        }
-        return ipAddress;
-    }
 
     public String trackShareCount(String articleId) {
         ArticleEntity entity = articleRepository.findByArticleId(articleId)
                 .orElseThrow(() -> new RuntimeException("No article found with the given articleId"));
 
-        entity.setSharedCount(entity.getSharedCount());
+        entity.setSharedCount(entity.getSharedCount() + 1);
         articleRepository.save(entity);
         return "";
     }
@@ -202,4 +197,20 @@ public class ArticleService {
         }
         return new PageImpl<>(dtoList, pageRequest, total);
     }
+
+    public ArticleShortInfoRecord toShortRecord(ArticleEntity entity) {
+
+        var dto = ArticleShortInfoRecord
+                .builder()
+                .id(entity.getId())
+                .title(entity.getTitle())
+                .description(entity.getDescription())
+                .publishedDate(LocalDateTime.now())
+                .image(attachService.getRecord(entity.getId()))
+                .build();
+
+        return dto;
+    }
+
+
 }

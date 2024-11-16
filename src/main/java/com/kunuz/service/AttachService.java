@@ -1,6 +1,7 @@
 package com.kunuz.service;
 
 import com.kunuz.dto.AttachDto;
+import com.kunuz.dto.AttachRecord;
 import com.kunuz.entity.AttachEntity;
 import com.kunuz.exps.AppBadRequestException;
 import com.kunuz.repository.AttachRepository;
@@ -226,6 +227,18 @@ public class AttachService {
         AttachDto dto = new AttachDto();
         dto.setId(id);
         dto.setUrl(getUrl(id));
+        return dto;
+    }
+
+
+    public AttachRecord getRecord(String id) {
+        if (id == null) return null;
+
+        AttachRecord dto = AttachRecord
+                .builder()
+                .id(id)
+                .url(getUrl(id))
+                .build();
         return dto;
     }
 }
