@@ -6,6 +6,7 @@ import com.kunuz.dto.ArticleFilterDto;
 import com.kunuz.dto.ArticleShortInfoDto;
 import com.kunuz.dto.ArticleShortInfoRecord;
 import com.kunuz.entity.ArticleEntity;
+import com.kunuz.enums.AppLanguage;
 import com.kunuz.enums.Status;
 import com.kunuz.enums.Visible;
 import com.kunuz.mapper.ArticleShortInfo;
@@ -32,6 +33,7 @@ public class ArticleService {
     private final ArticleTypesService articleTypesService;
     private final AttachService attachService;
     private final CustomArticleFilter filter;
+    private final ResourceBundleService resourceBundleService;
 
     public ArticleDto create(ArticleDto articleDto, HttpServletRequest request) {
 
@@ -117,10 +119,11 @@ public class ArticleService {
         return dto;
     }
 
-    public String trackView(String articleId, HttpServletRequest request) {
+    public String trackView(String articleId, HttpServletRequest request, AppLanguage language) {
         String ipAddress = HeaderUtil.getUserIP(request);
         ArticleEntity article = articleRepository.finByArticleIdAndIpAddress(articleId, ipAddress)
-                .orElseThrow(() -> new RuntimeException("No article found with the given articleId and ipAddress"));
+                .orElseThrow(() -> new RuntimeException(
+                        resourceBundleService.getMessage("No.article.found.with.the.given.articleId.and.ipAddress", language)));
 
 
         if (!(article.getViewCount() == 1)) {
@@ -131,9 +134,9 @@ public class ArticleService {
     }
 
 
-    public String trackShareCount(String articleId) {
+    public String trackShareCount(String articleId, AppLanguage language) {
         ArticleEntity entity = articleRepository.findByArticleId(articleId)
-                .orElseThrow(() -> new RuntimeException("No article found with the given articleId"));
+                .orElseThrow(() -> new RuntimeException(resourceBundleService.getMessage("No.article.found.with.the.given.articleId",language)));
 
         entity.setSharedCount(entity.getSharedCount() + 1);
         articleRepository.save(entity);

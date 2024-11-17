@@ -3,6 +3,7 @@ package com.kunuz.service;
 import com.kunuz.dto.AttachDto;
 import com.kunuz.dto.AttachRecord;
 import com.kunuz.entity.AttachEntity;
+import com.kunuz.enums.AppLanguage;
 import com.kunuz.exps.AppBadRequestException;
 import com.kunuz.repository.AttachRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ public class AttachService {
     private AttachRepository attachRepository;
     @Value("${server.domain}")
     private String domainName;
+    @Autowired
+    private ResourceBundleService resourceBundleService;
 
     private static final Map<String, Object> images = new HashMap<>();
 
@@ -48,7 +51,7 @@ public class AttachService {
     }
 
 
-    public ResponseEntity<Resource> open(String id) {
+    public ResponseEntity<Resource> open(String id, AppLanguage language) {
         AttachEntity entity = getEntity(id);
         String path = folderName + "/" + entity.getPath() + "/" + entity.getId();
 
@@ -58,7 +61,7 @@ public class AttachService {
         try {
             resource = new UrlResource(filePath.toUri());
             if (!resource.exists()) {
-                throw new RuntimeException("File not found: " + entity.getId());
+                throw new RuntimeException(resourceBundleService.getMessage("File.not.found", language) + entity.getId());
             }
             String contentType = Files.probeContentType(filePath);
             if (contentType == null) {
@@ -161,7 +164,7 @@ public class AttachService {
     }
 
 
-    public ResponseEntity<Resource> download(String fileName) {
+    public ResponseEntity<Resource> download(String fileName, AppLanguage language) {
         try {
             AttachEntity entity = getEntity(fileName);
             Path filePath = Paths.get(getPath(entity)).normalize();
@@ -172,11 +175,11 @@ public class AttachService {
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + entity.getOrigenName() + "\"")
                         .body(resource);
             } else {
-                throw new RuntimeException("Could not read the file!");
+                throw new RuntimeException(resourceBundleService.getMessage("Could.not.read.the.file", language));
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Could not read the file!");
+            throw new RuntimeException(resourceBundleService.getMessage("Could.not.read.the.file", language));
         }
 
     }

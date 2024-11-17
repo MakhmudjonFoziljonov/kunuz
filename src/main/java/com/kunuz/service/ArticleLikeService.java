@@ -3,6 +3,7 @@ package com.kunuz.service;
 
 import com.kunuz.dto.ArticleLikeDto;
 import com.kunuz.entity.ArticleLikeEntity;
+import com.kunuz.enums.AppLanguage;
 import com.kunuz.enums.LikeStatus;
 import com.kunuz.repository.ArticleLikeRepository;
 import com.kunuz.util.SpringSecurityUtil;
@@ -17,6 +18,8 @@ import java.time.LocalDateTime;
 public class ArticleLikeService {
     @Autowired
     private ArticleLikeRepository articleLikeRepository;
+    @Autowired
+    private ResourceBundleService resourceBundleService;
 
     public ArticleLikeDto like(String articleId) {
 
@@ -57,10 +60,10 @@ public class ArticleLikeService {
         return mapper(entity);
     }
 
-    public String remove(String articleId) {
+    public String remove(String articleId, AppLanguage language) {
         var entity = articleLikeRepository.findByProfileIdAndArticleId(getProfileId(), articleId);
         if (entity == null) {
-            throw new RuntimeException("No article found with the given articleId and ipAddress");
+            throw new RuntimeException(resourceBundleService.getMessage("No.article.found.with.the.given.articleId.and.ipAddress", language));
         }
         articleLikeRepository.deleteByProfileIdAndArticleId(getProfileId(), articleId);
         return "Like or dislike removed";

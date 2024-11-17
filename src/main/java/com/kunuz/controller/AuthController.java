@@ -2,6 +2,7 @@ package com.kunuz.controller;
 
 import com.kunuz.dto.*;
 import com.kunuz.dto.profile.ProfileDto;
+import com.kunuz.enums.AppLanguage;
 import com.kunuz.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,9 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/registration")
-    public ResponseEntity<String> registration(@RequestBody RegistrationDTO dto) {
-        return ResponseEntity.ok(authService.registration(dto));
+    public ResponseEntity<String> registration(@RequestBody RegistrationDTO dto,
+                                               @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang) {
+        return ResponseEntity.ok(authService.registration(dto, lang));
     }
 
     @GetMapping("/registration/confirm/{id}")
@@ -33,9 +35,10 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ProfileDto> login(@RequestBody @Valid AuthDto dto) {
+    public ResponseEntity<ProfileDto> login(@RequestBody @Valid AuthDto dto,
+                                            @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang) {
 
-        return ResponseEntity.ok(authService.login(dto));
+        return ResponseEntity.ok(authService.login(dto, lang));
     }
 
 

@@ -28,8 +28,9 @@ public class CategoryController {
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<CategoryDto> update(@RequestBody CategoryDto dto,
-                                              @PathVariable("id") Long id) {
-        return ResponseEntity.ok(service.update(dto, id));
+                                              @PathVariable("id") Long id,
+                                              @RequestHeader(value = "Accept-language") AppLanguage language) {
+        return ResponseEntity.ok(service.update(dto, id,language));
     }
 
     @DeleteMapping("/delete/{id}")

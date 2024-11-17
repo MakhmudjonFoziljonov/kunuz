@@ -1,6 +1,7 @@
 package com.kunuz.controller;
 
 import com.kunuz.dto.CommentDto;
+import com.kunuz.enums.AppLanguage;
 import com.kunuz.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,9 @@ public class CommentController {
     @PutMapping("/update")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_USER','MODERATOR')")
     public String update(@RequestBody CommentDto dto,
-                         @RequestParam String id) {
-        return commentService.update(dto, id);
+                         @RequestParam String id,
+                         @RequestHeader(value = "Accept-Language",defaultValue = "UZ") AppLanguage language) {
+        return commentService.update(dto, id,language);
     }
 
 

@@ -3,6 +3,7 @@ package com.kunuz.service;
 import com.kunuz.dto.CommentDto;
 import com.kunuz.entity.ArticleEntity;
 import com.kunuz.entity.CommentEntity;
+import com.kunuz.enums.AppLanguage;
 import com.kunuz.enums.Visible;
 import com.kunuz.repository.CommentRepository;
 import com.kunuz.util.SpringSecurityUtil;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final ResourceBundleService resourceBundleService;
 
     public CommentDto create(CommentDto dto) {
 
@@ -37,9 +39,9 @@ public class CommentService {
     }
 
 
-    public String update(CommentDto dto, String id) {
+    public String update(CommentDto dto, String id, AppLanguage language) {
         var entity = commentRepository.findById(Long.valueOf(id))
-                .orElseThrow(() -> new RuntimeException("Article not found"));
+                .orElseThrow(() -> new RuntimeException(resourceBundleService.getMessage("No.articles.found", language)));
 
         entity.setArticleId(dto.getArticleId());
         entity.setReplyId(dto.getReplyId());

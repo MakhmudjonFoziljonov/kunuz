@@ -44,8 +44,9 @@ public class ArticleTypeController {
     @PostMapping("/get-all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<Page<ArticleTypeDto>> getAll(@RequestParam(name = "page", defaultValue = "1") int page,
-                                                       @RequestParam(name = "size", defaultValue = "10") int size) {
-        return ResponseEntity.ok(articleTypeService.getAll(page - 1, size));
+                                                       @RequestParam(name = "size", defaultValue = "10") int size,
+                                                       @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language) {
+        return ResponseEntity.ok(articleTypeService.getAll(page - 1, size, language));
     }
 
     @GetMapping("/get-by-lang")

@@ -1,6 +1,7 @@
 package com.kunuz.controller;
 
 import com.kunuz.dto.AttachDto;
+import com.kunuz.enums.AppLanguage;
 import com.kunuz.service.AttachService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -25,13 +26,17 @@ public class AttachController {
     }
 
     @GetMapping("/open/{fileName}")
-    public ResponseEntity<Resource> open(@PathVariable String fileName) {
-        return attachService.open(fileName);
+    public ResponseEntity<Resource> open(@PathVariable String fileName,
+                                         @RequestHeader(value = "Accept-language", defaultValue = "UZ")
+                                         AppLanguage language) {
+        return attachService.open(fileName,language);
     }
 
     @GetMapping("/download/{fileName}")
-    public ResponseEntity<Resource> download(@PathVariable("fileName") String fileName) {
-        return attachService.download(fileName);
+    public ResponseEntity<Resource> download(@PathVariable("fileName") String fileName,
+                                             @RequestHeader(value = "Accept-language", defaultValue = "UZ")
+                                             AppLanguage language) {
+        return attachService.download(fileName,language);
     }
 
 

@@ -21,6 +21,8 @@ import java.util.List;
 public class ArticleTypeService {
     @Autowired
     private ArticleTypeRepository articleTypeRepository;
+    @Autowired
+    private ResourceBundleService resourceBundleService;
 
 
     public ArticleTypeDto create(ArticleTypeDto articleTypeDto) {
@@ -60,13 +62,13 @@ public class ArticleTypeService {
         return result > 0;
     }
 
-    public PageImpl getAll(int page, int size) {
+    public PageImpl getAll(int page, int size, AppLanguage language) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<ArticleTypeEntity> all = articleTypeRepository.getAll(pageRequest);
         Long totalElements = all.getTotalElements();
 
         if (all.isEmpty()) {
-            System.out.println("No articles found.");
+            System.out.println(resourceBundleService.getMessage("No.articles.found", language));
             return new PageImpl<>(List.of(), pageRequest, 0);
         }
 

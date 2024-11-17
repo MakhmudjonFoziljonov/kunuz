@@ -4,6 +4,7 @@ package com.kunuz.controller;
 import com.kunuz.dto.ArticleDto;
 import com.kunuz.dto.ArticleFilterDto;
 import com.kunuz.dto.ArticleShortInfoDto;
+import com.kunuz.enums.AppLanguage;
 import com.kunuz.service.ArticleService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,13 +73,15 @@ public class ArticleController {
 
 
     @GetMapping("/view-count/{articleId}")
-    public String trackViewCount(@PathVariable String articleId, HttpServletRequest request) {
-        return articleService.trackView(articleId, request);
+    public String trackViewCount(@PathVariable String articleId, HttpServletRequest request,
+                                 @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language) {
+        return articleService.trackView(articleId, request, language);
     }
 
     @GetMapping("/share-count/{articleId}")
-    public String trackShareCount(@PathVariable String articleId) {
-        return articleService.trackShareCount(articleId);
+    public String trackShareCount(@PathVariable String articleId,
+                                  @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage language) {
+        return articleService.trackShareCount(articleId, language);
     }
 
     @GetMapping("/filter")

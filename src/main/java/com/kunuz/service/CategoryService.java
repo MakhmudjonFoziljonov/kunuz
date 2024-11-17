@@ -17,6 +17,8 @@ import java.util.Optional;
 public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ResourceBundleService resourceBundleService;
 
     public CategoryDto create(CategoryDto dto) {
         CategoryEntity entity = new CategoryEntity();
@@ -30,9 +32,8 @@ public class CategoryService {
         return dto;
     }
 
-    public CategoryDto update(CategoryDto dto, Long id) {
-        CategoryEntity entity = categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Category not found!"));
+    public CategoryDto update(CategoryDto dto, Long id, AppLanguage language) {
+        CategoryEntity entity = categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(resourceBundleService.getMessage("Category.not.found", language)));
         entity.setOrderNumber(dto.getOrderNumber());
         entity.setNameUz(dto.getNameUz());
         entity.setNameRu(dto.getNameRu());
