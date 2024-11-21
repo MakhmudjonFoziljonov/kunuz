@@ -4,6 +4,6 @@ Content-Type: application/json
 Accept-Language: ru
 
 {
-  "email": "aba1@gmail.com",
+  "email": "aba@gmail.com",
   "password": "123"
 }

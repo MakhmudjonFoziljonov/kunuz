@@ -96,6 +96,7 @@ public class SmsService {
         dto.getData().getToken();
         return dto.getData().getToken();
     }
+
     public boolean check(String phone, String code) {
         Optional<SmsHistoryEntity> optional = smsHistoryRepository.findTopByPhoneOrderByCreatedDateDesc(phone);
         if (optional.isEmpty()) {
