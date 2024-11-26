@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @RequestMapping("auth/")
-@Slf4j
 public class AuthController {
     @Autowired
     private AuthService authService;
@@ -21,6 +21,11 @@ public class AuthController {
     @PostMapping("/registration")
     public ResponseEntity<String> registration(@RequestBody RegistrationDTO dto,
                                                @RequestHeader(value = "Accept-Language", defaultValue = "UZ") AppLanguage lang) {
+        log.debug("DEBUG");
+        log.info("INFO");
+        log.warn("WARNING");
+        log.error("ERROR");
+
         return ResponseEntity.ok(authService.registration(dto, lang));
     }
 

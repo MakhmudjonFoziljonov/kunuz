@@ -30,6 +30,30 @@ public class SpringSecurityConfig {
     private UserDetailsService userDetailsService;
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+    public static final String[] AUTH_WHITELIST = {
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui/**",
+            "/webjars/**",
+            "/swagger-ui.html",
+            "/api/v1/comment/public/**",
+            "/api/v1/sell_type/public/**",
+            "/api/v1/district/**",
+            "/api/v1/category/getAll",
+            "/api/v1/category/getById/*",
+            "/api/v1/post/main/page",
+            "/api/v1/post/all/byType",
+            "api/v1/post/byShopId/*",
+            "api/v1/post/byCategoryId/*",
+            "api/v1/post/detail/guest/*",
+            "api/v1/post/filter",
+    };
+
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -55,6 +79,7 @@ public class SpringSecurityConfig {
                     .requestMatchers("/article/*").permitAll()
                     .requestMatchers("/region/**").permitAll()
                     .requestMatchers("/category/**").permitAll()
+                    .requestMatchers(AUTH_WHITELIST).permitAll()
                     .anyRequest().authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
