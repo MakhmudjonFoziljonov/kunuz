@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(
         info = @io.swagger.v3.oas.annotations.info.Info(
                 contact = @io.swagger.v3.oas.annotations.info.Contact(
-                        name = "Kun Uz",
+                        name = "KunUz",
                         email = "something@gmal.com",
                         url = "http://app.mazgi.uz/"
                 ),
@@ -44,7 +44,7 @@ import org.springframework.context.annotation.Configuration;
 @SecurityScheme(
         name = "bearerAuth",
         description = "JWT auth description",
-        scheme = "bearer",
+        scheme = "Bearer",
         type = SecuritySchemeType.HTTP,
         bearerFormat = "JWT",
         in = SecuritySchemeIn.HEADER

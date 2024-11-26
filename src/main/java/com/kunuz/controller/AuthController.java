@@ -4,6 +4,7 @@ import com.kunuz.dto.*;
 import com.kunuz.dto.profile.ProfileDto;
 import com.kunuz.enums.AppLanguage;
 import com.kunuz.service.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("auth/")
+@Tag(name = "Authorization controller")
 public class AuthController {
     @Autowired
     private AuthService authService;
