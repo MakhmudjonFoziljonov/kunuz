@@ -9,7 +9,7 @@ import org.hibernate.annotations.UuidGenerator;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comment")
+@Table(name = "comments")
 @Getter
 @Setter
 public class CommentEntity {

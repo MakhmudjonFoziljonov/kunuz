@@ -5,12 +5,8 @@ Content-Type: application/json
 {
   "id": 0,
   "title": "test",
-  "content": "test",
-  "attachDtoList": [
-    {
-      "id": "cac538aa-db0b-4afe-adf2-3a12207f911f.jpg"
-    }
-  ]
+  "content": "test"
+
 }
 
 ###
@@ -18,16 +14,13 @@ GET http://localhost:8080/post/get/1
 
 
 ###
-PUT http://localhost:8080/post/update/2
+PUT http://localhost:8080/post/update/1
 Content-Type: application/json
 
 {
-  "id": 2,
-  "title": "test3",
-  "content": "test3",
+  "id": 1,
+  "title": "test_test",
+  "content": "test_test",
   "attachDtoList": [
-    {
-      "id": "fb94f75c-50dd-47cc-a50f-fa449ee73184.jpg"
-    }
   ]
 }
